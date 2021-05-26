@@ -15,6 +15,7 @@ pipeline {
         stage('Add tag') { 
             steps {
                 script {
+                sh "set +e"
                 TAG_EXIST = sh(returnStdout: true, script: 'git rev-parse "v0.1" || echo "tags not found"').trim()
                 if (TAG_EXIST != 'v0.1') {
                     echo "tag exist, commit $TAG_EXIST";
