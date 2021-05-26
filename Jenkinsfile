@@ -17,12 +17,14 @@ pipeline {
                 script {
                 sh "set +e"
                 TAG_EXIST = sh(returnStdout: true, script: 'git rev-parse "v0.1" || echo "tags not found"').trim()
+                TAG_EXIST = TAG_EXIST.substring(0,3);
+                echo "$TAG_EXIST"
                 if (TAG_EXIST != 'v0.1') {
                     echo "tag exist, commit $TAG_EXIST";
                     LAST_TAG = sh(returnStdout: true, script: 'git describe --tags --abbrev=0').trim();
                     NEW_COMMITS = sh(script: "git rev-list $LAST_TAG..HEAD --count", returnStdout: true)
                     echo "$NEW_COMMITS"
-                    if (NEW_COMMITS != "0") {
+                    if (NEW_COMMITS != '0') {
                         echo "here"
                         
                         echo "here"
