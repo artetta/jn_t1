@@ -17,7 +17,7 @@ pipeline {
                 script {
                 sh "set +e"
                 TAG_EXIST = sh(returnStdout: true, script: 'git rev-parse "v0.1" || echo "tags not found"').trim()
-                TAG_EXIST = TAG_EXIST.substring(0,3);
+                TAG_EXIST = TAG_EXIST.substring(0,4);
                 echo "$TAG_EXIST"
                 if (TAG_EXIST != 'v0.1') {
                     echo "tag exist, commit $TAG_EXIST";
