@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
     def TAG_EXIST = sh(returnStdout: true, script: 'git rev-parse "v0.1"').trim()
-    def LAST_TAG = sh(returnStdout: true, script: 'git describe --tags --abbrev=0').trim()
+    def LAST_TAG = ""
     def NEW_COMMITS = ""
     def NEW_TAG = ""
     def NEW_BRANCH = ""
@@ -16,6 +16,7 @@ pipeline {
                 script {
                 if (TAG_EXIST != 'v0.1') {
                     echo "tag exist, commit $TAG_EXIST";
+                    LAST_TAG = sh(returnStdout: true, script: 'git describe --tags --abbrev=0').trim();
                     NEW_COMMITS = sh(script: "git rev-list $LAST_TAG..HEAD --count", returnStdout: true)
                     echo "$NEW_COMMITS"
                     if (NEW_COMMITS != "0") {
