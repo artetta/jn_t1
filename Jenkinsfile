@@ -4,7 +4,8 @@ pipeline {
         skipStagesAfterUnstable()
     }
     environment {
-    def TAG_EXIST = sh(returnStdout: true, script: 'git rev-parse "v0.1"').trim()
+    def TAG_EXIST = ""
+    
     def LAST_TAG = ""
     def NEW_COMMITS = ""
     def NEW_TAG = ""
@@ -14,6 +15,7 @@ pipeline {
         stage('Add tag') { 
             steps {
                 script {
+                TAG_EXIST = sh(returnStdout: true, script: 'git rev-parse "v0.1" || echo "tags not found"').trim()
                 if (TAG_EXIST != 'v0.1') {
                     echo "tag exist, commit $TAG_EXIST";
                     LAST_TAG = sh(returnStdout: true, script: 'git describe --tags --abbrev=0').trim();
